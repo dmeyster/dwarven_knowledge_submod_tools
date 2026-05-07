@@ -312,7 +312,7 @@ public class Blueprints_Gen {
         String requirementsToString;
 
         if (blueprintRequirements.isEmpty() || blueprintRequirements.getFirst().equalsIgnoreCase("none")) {
-            requirementsToString = "#\t\t\tno requirements";
+            requirementsToString = "#no requirements";
         } else {
             // Join the list with newlines and tabs for indentation
             requirementsToString = String.join("\n\t\t\t", blueprintRequirements);
