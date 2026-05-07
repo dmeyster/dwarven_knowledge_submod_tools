@@ -309,18 +309,7 @@ public class Blueprints_Gen {
                                 String blueprintElectricalPower, String blueprintElectricalFire, String blueprintElectricalShock, String blueprintElectricalFireReceived, String blueprintElectricalShockReceived) {
 
         int eventId = getCorrectEventNumber(chosenUnit, 0);
-        String requirementsToString;
-
-        if (blueprintRequirements.isEmpty() || blueprintRequirements.getFirst().equalsIgnoreCase("none")) {
-            requirementsToString = "#no requirements";
-        } else {
-            // Join the list with newlines and tabs for indentation
-            requirementsToString = String.join("\n\t\t\t", blueprintRequirements);
-        }
-
-        blueprintPunk = blueprintPunk.equalsIgnoreCase("none")
-                ? "#DA_Blueprint = none"
-                : "has_country_flag = DA_Unlocked." + blueprintUnique;
+        String requirementsToString = getRequirementsToString(blueprintRequirements, blueprintPunk);
 
         blueprintUnique = blueprintUnique.equalsIgnoreCase("none")
                 ? "#DA_Unique = none"
@@ -333,11 +322,6 @@ public class Blueprints_Gen {
                 		name = "DA_Metallurgy_events.%d.%s"
                 		highlight = yes
                 		trigger = {
-                			custom_trigger_tooltip = {
-                				tooltip = DA_Unlocked_this_Blueprint
-                				has_country_flag = DA_Unlocked.%s
-                				has_country_flag = DA_Unlocked.%s
-                			}
                 			%s
                 		}
                 		DA_apply_Blueprint = {
@@ -353,7 +337,7 @@ public class Blueprints_Gen {
                 			%s
                 		}
                 	}
-                """.formatted(eventId, blueprintName, blueprintPunk, blueprintName, requirementsToString, chosenUnit,
+                """.formatted(eventId, blueprintName, requirementsToString, chosenUnit,
                 blueprintCost, blueprintNRuneSlots, blueprintPower, blueprintFire, blueprintShock, blueprintFireReceived, blueprintShockReceived,
                 blueprintUnique, electricalSection);
     }
@@ -370,5 +354,17 @@ public class Blueprints_Gen {
                 \t\t\tDA_Fire_rec.electric = %s
                 \t\t\tDA_Shock_rec.electric = -%s
                 """.formatted(power, fire, shock, fireRec, shockRec);
+    }
+    private String getRequirementsToString(List<String> requirements, String punk) {
+        if (requirements.isEmpty() || requirements.getFirst().equalsIgnoreCase("none")) {
+            return("#no requirements");
+        } else {
+            List<String> formattedRequirements = new ArrayList<>();
+            for (String req : requirements) {
+                formattedRequirements.add("has_country_flag = " + req);
+            }
+            formattedRequirements.add("has_country_flag = " + punk);
+            return (String.join("\n\t\t\t", formattedRequirements));
+        }
     }
 }
