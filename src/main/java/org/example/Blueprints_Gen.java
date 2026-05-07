@@ -363,7 +363,7 @@ public class Blueprints_Gen {
             for (String req : requirements) {
                 formattedRequirements.add("has_country_flag = " + req);
             }
-            formattedRequirements.add("has_country_flag = " + punk);
+            formattedRequirements.add("has_country_flag = DA_Unlocked.punk." + punk);
             return (String.join("\n\t\t\t", formattedRequirements));
         }
     }
