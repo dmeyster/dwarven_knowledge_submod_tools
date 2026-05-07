@@ -6,14 +6,7 @@ import java.util.*;
 public class Blueprints_Gen {
     public void generateFile() {
         Scanner input = new Scanner(System.in);
-        List<String> stats = List.of(
-                "power",
-                "fire_damage",
-                "shock_damage",
-                "shock_damage_received",
-                "fire_damage_received"
-        );
-        System.out.println("choose unit to generate blueprint for: (type in one of: INFAN/ARTIFICER/CAVAL/ARTIL)");
+        System.out.println("choose unit to generate blueprint/punk for: (type in one of: INFAN/ARTIFICER/CAVAL/ARTIL)");
         String chosenUnit = input.nextLine();
 
         File Punks = new File("C:\\Users\\dmeys\\Documents\\Paradox Interactive\\Europa Universalis IV\\modding\\Dwarven-Knowledge-Dev-fork-dmeyster\\events\\DA_Metallurgy_events_" + chosenUnit + "_4.txt");
@@ -28,14 +21,11 @@ public class Blueprints_Gen {
             if (Objects.equals(chosenType, "punk")){
                 try (RandomAccessFile raf1 = new RandomAccessFile(Punks, "rw")){
 
-                    String startingBlock = getStartingBlock(chosenUnit, 4); //4 here is number to add to event number to get correct one, for example infantry events is 50 + 4 to get infantry punks
-                    String endBlock = getEndBlock(chosenUnit, "punk");
-
                     if (raf1.length() == 0){
                         raf1.writeBytes(getStartingBlock(chosenUnit, 4));
                         raf1.writeBytes(getEndBlock(chosenUnit, "punk"));
                     }
-                    raf1.seek(raf1.length() - endBlock.length() + 1);   //setting pointer to the start of endBlock to replace it with new punk option
+                    raf1.seek(raf1.length() - 131);   //setting pointer 1 line higher than the start of endBlock to replace it with new punk option, endBlock length is 130
 
                     //generate stat changes
 
@@ -210,12 +200,13 @@ public class Blueprints_Gen {
                         always = yes
                     }
                     is_triggered_only = yes
+                
                 """.formatted(eventId, chosenUnit, eventId, eventId);
     }
 
     private String getEndBlock(String chosenUnit, String type) { //stage here is number to add to event number to get correct one, for example infantry events is 50 + 4 to get infantry punks
         return 	"""	
-                    	
+                    
                     	after = {
                     		hidden_effect = {
                     			set_country_flag = DA_selected_%s_%s
