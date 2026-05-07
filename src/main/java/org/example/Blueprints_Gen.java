@@ -307,11 +307,25 @@ public class Blueprints_Gen {
                                 String blueprintCost, String blueprintNRuneSlots, String blueprintPower, String blueprintFire, String blueprintShock, String blueprintFireReceived, String blueprintShockReceived,
                                 String blueprintUnique, String blueprintElectrical,
                                 String blueprintElectricalPower, String blueprintElectricalFire, String blueprintElectricalShock, String blueprintElectricalFireReceived, String blueprintElectricalShockReceived) {
+
         int eventId = getCorrectEventNumber(chosenUnit, 0);
-        String requirementsToString = String.join("\n\t\t\t", blueprintRequirements);
+        String requirementsToString;
+
+        if (blueprintRequirements.isEmpty() || blueprintRequirements.getFirst().equalsIgnoreCase("none")) {
+            requirementsToString = "#\t\t\tno requirements";
+        } else {
+            // Join the list with newlines and tabs for indentation
+            requirementsToString = String.join("\n\t\t\t", blueprintRequirements);
+        }
+
+        blueprintPunk = blueprintPunk.equalsIgnoreCase("none")
+                ? "#DA_Blueprint = none"
+                : "has_country_flag = DA_Unlocked." + blueprintUnique;
+
         blueprintUnique = blueprintUnique.equalsIgnoreCase("none")
                 ? "#DA_Unique = none"
                 : "DA_Unique = " + blueprintUnique;
+
         String electricalSection = getElectricalSection(blueprintElectrical, blueprintElectricalPower, blueprintElectricalFire, blueprintElectricalShock, blueprintElectricalFireReceived, blueprintElectricalShockReceived);
 
         return """
@@ -345,7 +359,7 @@ public class Blueprints_Gen {
     }
 
     private String getElectricalSection(String isElectrical, String power, String fire, String shock, String fireRec, String shockRec) {
-        if (isElectrical.equals("no")) {
+        if (isElectrical.equals("no") || isElectrical.equals("none")) {
             return "#DA_Electrical = none";
         }
         return """
