@@ -32,12 +32,12 @@ public class Dw_Kn_Modifiers_Gen {
         try (PrintWriter out = new PrintWriter(targetFileModifiers)){
 
             out.println("""
-            # all metallurgy modifiers for infantry, artificers and cavalry special units
-            
-            ######################################################
-            ################ costs  modifiers ####################
-            ######################################################
-            """);
+                # all metallurgy modifiers for infantry, artificers and cavalry special units
+                
+                ######################################################
+                ################ costs  modifiers ####################
+                ######################################################
+                """);
 
             // iterating over units for cost modifiers
             for (Map.Entry<String, List<String>> entry : Units.entrySet()) {
@@ -172,28 +172,28 @@ public class Dw_Kn_Modifiers_Gen {
             out3.println();
 
             out3.print("""
-            DA_Apply_cost = {
-                set_variable = {
-                        which = DA_TOTAL_COST
-                        value = 0
-                }
-                change_variable = {
-                        which = DA_TOTAL_COST
-                        which = DA_Cost_INFAN
-                }
-                change_variable = {
-                        which = DA_TOTAL_COST
-                        which = DA_Cost_ARTIFICER
-                }
-                change_variable = {
-                        which = DA_TOTAL_COST
-                        which = DA_Cost_CAVAL
-                }
-                change_variable = {
-                        which = DA_TOTAL_COST
-                        which = DA_Cost_ARTIL
-                }
-            """);
+                DA_Apply_cost = {
+                    set_variable = {
+                            which = DA_TOTAL_COST
+                            value = 0
+                    }
+                    change_variable = {
+                            which = DA_TOTAL_COST
+                            which = DA_Cost_INFAN
+                    }
+                    change_variable = {
+                            which = DA_TOTAL_COST
+                            which = DA_Cost_ARTIFICER
+                    }
+                    change_variable = {
+                            which = DA_TOTAL_COST
+                            which = DA_Cost_CAVAL
+                    }
+                    change_variable = {
+                            which = DA_TOTAL_COST
+                            which = DA_Cost_ARTIL
+                    }
+                """);
 
             for (Map.Entry<String, List<String>> entry : Units.entrySet()) {
                 String unitCode = entry.getKey();              // "INFAN"
@@ -207,16 +207,16 @@ public class Dw_Kn_Modifiers_Gen {
             out3.println();
 
             out3.print("""
-            DA_Apply_cost_fake = {
-                tooltip = {
-            """);
+                DA_Apply_cost_fake = {
+                    tooltip = {
+                """);
             for (int i = 0; i <= 66; i++) {
                 out3.println("        if = { limit = { is_variable_equal = { which = DA_Cost_$DA_unit$ value = " + i + " } } add_country_modifier = { name = DA_cost_$DA_unit$_" + i + " duration = -1 } }");
             }
             out3.print("""
+                    }
                 }
-            }
-            """);
+                """);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
