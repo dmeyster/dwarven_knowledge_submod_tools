@@ -308,7 +308,7 @@ public class Blueprints_Gen {
                                 String blueprintElectricalPower, String blueprintElectricalFire, String blueprintElectricalShock, String blueprintElectricalFireReceived, String blueprintElectricalShockReceived) {
 
         int eventId = getCorrectEventNumber(chosenUnit, 0);
-        String requirementsToString = getRequirementsToString(blueprintRequirements, blueprintPunk);
+        String requirementsToString = getRequirementsToString(blueprintRequirements, blueprintPunk, blueprintName);
 
         blueprintUnique = blueprintUnique.equalsIgnoreCase("none")
                 ? "#DA_Unique = none"
@@ -354,16 +354,42 @@ public class Blueprints_Gen {
                 \t\t\tDA_Shock_rec.electric = -%s
                 """.formatted(power, fire, shock, fireRec, shockRec);
     }
-    private String getRequirementsToString(List<String> requirements, String punk) {
+    private String getRequirementsToString(List<String> requirements, String punk, String name) {
+        List<String> formattedRequirements = new ArrayList<>();
+
         if (requirements.isEmpty() || requirements.getFirst().equalsIgnoreCase("none")) {
-            return("#no requirements");
-        } else {
-            List<String> formattedRequirements = new ArrayList<>();
-            for (String req : requirements) {
-                formattedRequirements.add("has_country_flag = " + req);
+            formattedRequirements.add("""
+                    custom_trigger_tooltip = {
+                    \ttooltip = DA_Unlocked_this_Blueprint
+                    \thas_country_flag = DA_Unlocked.%s
+                    """.formatted(name));
+            if (!punk.equals("none")){
+                formattedRequirements.add("has_country_flag = DA_Unlocked.punk." + punk);
             }
-            formattedRequirements.add("has_country_flag = DA_Unlocked.punk." + punk);
-            return (String.join("\n\t\t\t", formattedRequirements));
+            formattedRequirements.add("}");
+
+        } else {
+            formattedRequirements.add("""
+                    custom_trigger_tooltip = {
+                    \t\t\t\ttooltip = DA_Unlocked_this_Blueprint
+                    \t\t\t\thas_country_flag = DA_Unlocked.%s
+                    """.formatted(name));
+            requirements.stream()
+                    .filter(req -> req.contains("Unlocked"))
+                    .forEach(req -> formattedRequirements.add("""
+                    \thas_country_flag = DA_Unlocked.%s
+                    """.formatted(req)));
+            if (!punk.equals("none")){
+                formattedRequirements.add("\thas_country_flag = DA_Unlocked.punk." + punk);
+            }
+            formattedRequirements.add("\n\t\t\t}\n");
+            requirements.stream()
+                    .filter(req -> !req.contains("Unlocked"))
+                    .forEach(req -> formattedRequirements.add("""
+                    %s
+                    """.formatted(req)));
+
         }
+        return (String.join("\t\t\t", formattedRequirements));
     }
 }
