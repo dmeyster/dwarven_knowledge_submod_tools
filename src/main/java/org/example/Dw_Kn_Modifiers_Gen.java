@@ -113,7 +113,7 @@ public class Dw_Kn_Modifiers_Gen {
 
                 for (int i = startValue; i <= 100; i++) {
                     if (i == 0) continue;
-                    out2.println("    remove_country_modifier = DA_" + stat + ".$DA_unit$." + i);
+                    out2.printf("    remove_country_modifier = DA_" + stat + ".$DA_unit$.%.2f%n", -0.01f * i);
                 }
             }
             out2.println("}");
@@ -135,8 +135,8 @@ public class Dw_Kn_Modifiers_Gen {
                 for (int i = startValue; i <= 100; i++) {
                     if (i == 0) continue;
                     out2.println("    if = {");
-                    out2.println("        limit = { is_variable_equal = { which = DA_" + stat + "_TOTAL_$DA_unit$ value = " + i + " } }");
-                    out2.println("        add_country_modifier = { name = DA_" + stat + ".$DA_unit$." + i + " duration = -1 hidden = yes }");
+                    out2.printf("        limit = { is_variable_equal = { which = DA_" + stat + "_TOTAL_$DA_unit$ value = %.2f } }%n", -0.01f * i);
+                    out2.printf("        add_country_modifier = { name = DA_" + stat + ".$DA_unit$.%.2f duration = -1 hidden = yes }%n", -0.01f * i);
                     out2.println("    }");
                 }
                 out2.println();
