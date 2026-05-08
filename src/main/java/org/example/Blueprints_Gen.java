@@ -97,25 +97,22 @@ public class Blueprints_Gen {
                     String blueprintPunk = input.nextLine();
 
                     System.out.println("type cost of blueprint (e.g. 10)");
-                    String blueprintCost = input.nextLine();
-
                     System.out.println("type number of rune slots of blueprint (e.g. 2)");
-                    String blueprintNRuneSlots = input.nextLine();
-
                     System.out.println("type combat ability of chosen unit (power) of blueprint (e.g. 0.02)");
-                    String blueprintPower = input.nextLine();
-
                     System.out.println("type fire damage of blueprint (e.g. 0.02)");
-                    String blueprintFire = input.nextLine();
-
                     System.out.println("type shock damage of blueprint (e.g. 0.02)");
-                    String blueprintShock = input.nextLine();
+                    System.out.println("type fire damage received of blueprint (e.g. -0.02)");
+                    System.out.println("type shock damage received of blueprint (e.g. -0.02)");
+                    System.out.println("all separated by spaces (e.g. 10 2 0.02 0.02 0.02 -0.02 -0.02)");
 
-                    System.out.println("type fire damage received of blueprint (e.g. 0.02)");
-                    String blueprintFireReceived = input.nextLine();
-
-                    System.out.println("type shock damage received of blueprint (e.g. 0.02)");
-                    String blueprintShockReceived = input.nextLine();
+                    String blueprintCost = input.next();
+                    String blueprintNRuneSlots = input.next();
+                    String blueprintPower = input.next();
+                    String blueprintFire = input.next();
+                    String blueprintShock = input.next();
+                    String blueprintFireReceived = input.next();
+                    String blueprintShockReceived = input.next();
+                    input.nextLine();
 
                     System.out.println("type Unique modifier, if there is none - type none(e.g. Vault_Blade_of_Severance/none)");
                     String blueprintUnique = input.nextLine();
@@ -130,20 +127,19 @@ public class Blueprints_Gen {
                     String blueprintElectricalShockReceived = "";
 
                     if (blueprintElectrical.equals("yes")) {
+                        System.out.println("type combat ability of chosen unit (power) of blueprintElectrical (e.g. 0.02)");
                         System.out.println("type fire damage of blueprintElectrical (e.g. 0.02)");
-                        blueprintElectricalPower = input.nextLine();
-
-                        System.out.println("type fire damage of blueprintElectrical (e.g. 0.02)");
-                        blueprintElectricalFire = input.nextLine();
-
                         System.out.println("type shock damage of blueprintElectrical (e.g. 0.02)");
-                        blueprintElectricalShock = input.nextLine();
+                        System.out.println("type fire damage received of blueprintElectrical (e.g. -0.02)");
+                        System.out.println("type shock damage received of blueprintElectrical (e.g. -0.02)");
+                        System.out.println("all separated by spaces (e.g. 10 2 0.02 0.02 0.02 -0.02 -0.02)");
 
-                        System.out.println("type fire damage received of blueprintElectrical (e.g. 0.02)");
-                        blueprintElectricalFireReceived = input.nextLine();
-
-                        System.out.println("type shock damage received of blueprintElectrical (e.g. 0.02)");
-                        blueprintElectricalShockReceived = input.nextLine();
+                        blueprintElectricalPower = input.next();
+                        blueprintElectricalFire = input.next();
+                        blueprintElectricalShock = input.next();
+                        blueprintElectricalFireReceived = input.next();
+                        blueprintElectricalShockReceived = input.next();
+                        input.nextLine();
                     }
 
                     raf2.writeBytes(getBlueprint(chosenUnit, blueprintPunk, blueprintName, blueprintRequirements,
@@ -360,8 +356,8 @@ public class Blueprints_Gen {
         if (requirements.isEmpty() || requirements.getFirst().equalsIgnoreCase("none")) {
             formattedRequirements.add("""
                     custom_trigger_tooltip = {
-                    \ttooltip = DA_Unlocked_this_Blueprint
-                    \thas_country_flag = DA_Unlocked.%s
+                    \t\t\t\ttooltip = DA_Unlocked_this_Blueprint
+                    \t\t\t\thas_country_flag = DA_Unlocked.%s
                     """.formatted(name));
             if (!punk.equals("none")){
                 formattedRequirements.add("has_country_flag = DA_Unlocked.punk." + punk);
