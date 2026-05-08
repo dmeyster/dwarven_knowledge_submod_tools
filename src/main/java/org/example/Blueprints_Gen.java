@@ -132,7 +132,7 @@ public class Blueprints_Gen {
                         System.out.println("type shock damage of blueprintElectrical (e.g. 0.02)");
                         System.out.println("type fire damage received of blueprintElectrical (e.g. -0.02)");
                         System.out.println("type shock damage received of blueprintElectrical (e.g. -0.02)");
-                        System.out.println("all separated by spaces (e.g. 10 2 0.02 0.02 0.02 -0.02 -0.02)");
+                        System.out.println("all separated by spaces (e.g. 0.02 0.02 0.02 -0.02 -0.02)");
 
                         blueprintElectricalPower = input.next();
                         blueprintElectricalFire = input.next();
