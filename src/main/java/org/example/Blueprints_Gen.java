@@ -35,23 +35,23 @@ public class Blueprints_Gen {
 
                     System.out.println("type change to cost of blueprint from punk tech, if no change - 0");
                     int punkCost = Integer.parseInt(input.nextLine());
-                    raf1.writeBytes(getCost(punkCost));
+                    raf1.writeBytes(getCost(chosenUnit, punkCost));
 
                     System.out.println("type change to metal strength of blueprint from punk tech, if no change - 0");
                     int punkStrength = Integer.parseInt(input.nextLine());
-                    raf1.writeBytes(getStrength(punkStrength));
+                    raf1.writeBytes(getStrength(chosenUnit, punkStrength));
 
                     System.out.println("type change to magical conductivity of blueprint from punk tech, if no change - 0");
                     int punkMagicConductivity = Integer.parseInt(input.nextLine());
-                    raf1.writeBytes(getMagicConductivity(punkMagicConductivity));
+                    raf1.writeBytes(getMagicConductivity(chosenUnit, punkMagicConductivity));
 
                     System.out.println("type change to electrical conductivity of blueprint from punk tech, if no change - 0");
                     int punkElectricalConductivity = Integer.parseInt(input.nextLine());
-                    raf1.writeBytes(getElectricalConductivity(punkElectricalConductivity));
+                    raf1.writeBytes(getElectricalConductivity(chosenUnit, punkElectricalConductivity));
 
                     System.out.println("type change to amount of rune slots of blueprint from punk tech, if no change - 0");
                     int punkRuneSloths = Integer.parseInt(input.nextLine());
-                    raf1.writeBytes(getRuneSloths(punkRuneSloths));
+                    raf1.writeBytes(getRuneSloths(chosenUnit, punkRuneSloths));
 
                     raf1.writeBytes("    }");
                     raf1.writeBytes(getEndBlock(chosenUnit, "punk"));
@@ -227,67 +227,66 @@ public class Blueprints_Gen {
                                     tooltip = DA_Unlocked_this_%s
                                     has_country_flag = DA_Unlocked.%s.%s
                                 }
-                                has_country_flag = DA_Unlocked.%s.%s
                             }
-                """.formatted(eventId, name, "punk", "punk", name, "punk", name);
+                """.formatted(eventId, name, "punk", "punk", name);
     }
 
-    private String getCost(int statChange){
+    private String getCost(String chosenUnit, int statChange){
         if (statChange != 0) {
             return """
                             change_variable = {
-                                which = DA_Cost_$DA_unit$
+                                which = DA_Cost_%s
                                 value = %d
                             }
-                    """.formatted(statChange);
+                    """.formatted(chosenUnit, statChange);
         }
         return ("       # no cost change for this punk\n");
     }
 
-    private String getStrength(int statChange){
+    private String getStrength(String chosenUnit, int statChange){
         if (statChange != 0) {
             return """
                             change_variable = {
-                                which = DA_Metal_strength_STAT_$DA_unit$
+                                which = DA_Metal_strength_STAT_%s
                                 value = %d
                             }
-                    """.formatted(statChange);
+                    """.formatted(chosenUnit, statChange);
         }
         return ("       # no strength change for this punk\n");
     }
 
-    private String getMagicConductivity(int statChange){
+    private String getMagicConductivity(String chosenUnit, int statChange){
         if (statChange != 0) {
             return """
                             change_variable = {
-                                which = DA_Metal_Magic_Conductivity_STAT_$DA_unit$
+                                which = DA_Metal_Magic_Conductivity_STAT_%s
                                 value = %d
                             }
-                    """.formatted(statChange);
+                    """.formatted(chosenUnit, statChange);
         }
         return ("       # no magic conductivity change for this punk\n");
     }
 
-    private String getElectricalConductivity(int statChange){
+    private String getElectricalConductivity(String chosenUnit, int statChange){
         if (statChange != 0) {
             return """
                             change_variable = {
-                                which = DA_Metal_electrical_Conductivity_STAT_$DA_unit$
+                                which = DA_Metal_electrical_Conductivity_STAT_%s
                                 value = %d
                             }
-                    """.formatted(statChange);
+                    """.formatted(chosenUnit, statChange);
         }
         return ("       # no electric conductivity change for this punk\n");
     }
 
-    private String getRuneSloths(int statChange){
+    private String getRuneSloths(String chosenUnit, int statChange){
         if (statChange != 0) {
             return """
                             change_variable = {
-                                which = DA_Runes_Slots_STAT_MAX_$DA_unit$
+                                which = DA_Runes_Slots_STAT_MAX_%s
                                 value = %d
                             }
-                    """.formatted(statChange);
+                    """.formatted(chosenUnit, statChange);
         }
         return ("       # no runes amount change for this punk\n");
     }
