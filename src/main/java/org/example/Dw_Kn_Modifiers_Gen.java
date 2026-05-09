@@ -156,7 +156,7 @@ public class Dw_Kn_Modifiers_Gen {
             // iterating over units for cost modifiers
             for (Map.Entry<String, List<String>> entry : Units.entrySet()) {
                 String unitCode = entry.getKey();              // "INFAN"
-                for (int i = 0; i <= 66; i++) {
+                for (int i = 1; i <= 66; i++) {
                     out3.println("    remove_country_modifier = DA_cost_" + unitCode + "_" + i);
                 }
                 out3.println();
@@ -198,7 +198,7 @@ public class Dw_Kn_Modifiers_Gen {
             for (Map.Entry<String, List<String>> entry : Units.entrySet()) {
                 String unitCode = entry.getKey();              // "INFAN"
                 out3.println();
-                for (int i = 0; i <= 66; i++) {
+                for (int i = 1; i <= 66; i++) {
                     out3.println("    if = { limit = { is_variable_equal = { which = DA_Cost_" + unitCode + " value = " + i + " } } add_country_modifier = { name = DA_Cost_" + unitCode + "_" + i + " duration = -1 hidden = yes } }");
 
                 }
@@ -210,7 +210,7 @@ public class Dw_Kn_Modifiers_Gen {
                 DA_Apply_cost_fake = {
                     tooltip = {
                 """);
-            for (int i = 0; i <= 66; i++) {
+            for (int i = 1; i <= 66; i++) {
                 out3.println("        if = { limit = { is_variable_equal = { which = DA_Cost_$DA_unit$ value = " + i + " } } add_country_modifier = { name = DA_cost_$DA_unit$_" + i + " duration = -1 } }");
             }
             out3.print("""
