@@ -92,7 +92,7 @@ public class Dw_Kn_Modifiers_Gen {
                     out.println("# " + stat);
                     for (int i = startValue; i <= 100; i++) {
                         if (i == 0) continue;
-                        out.println("DA_" + stat + "." + unitCode + "." + i + " = {");
+                        out.printf("DA_" + stat + "." + unitCode + ".%.2f = {%n", 0.01f * i);
                         out.println("    " + tag + " = yes");
                         out.printf("    " + currentStat + " = %.2f%n", 0.01f * i);
                         out.println("}");
