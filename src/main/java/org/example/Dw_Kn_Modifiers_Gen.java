@@ -86,11 +86,11 @@ public class Dw_Kn_Modifiers_Gen {
 
                 for (String stat : stats) {
                     boolean isDamageReceived = stat.endsWith("_received");
-                    int startValue = isDamageReceived ? -80 : -100;
+                    int endValue = isDamageReceived ? 80 : 100;
                     boolean isPowerStat = stat.endsWith("power");
                     String currentStat = isPowerStat ? fullUnitName + "_" + stat : stat;
                     out.println("# " + stat);
-                    for (int i = startValue; i <= 100; i++) {
+                    for (int i = -100; i <= endValue; i++) {
                         if (i == 0) continue;
                         out.printf("DA_" + stat + "." + unitCode + ".%.2f = {%n", 0.01f * i);
                         out.println("    " + tag + " = yes");
